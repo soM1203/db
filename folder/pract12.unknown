@@ -1,0 +1,80 @@
+package Ass12;
+
+
+//including essential libraries
+import com.mongodb.*;
+
+public class mongo { 
+
+	public static void main(String[] args) throws Exception 
+	{ 
+		// throwing an exception 
+		try { 
+			MongoClient mongoClient = new MongoClient("localhost",27017); // establishing a server connection in localhost 
+			DB db = mongoClient.getDB("pract12"); // creating database called student 
+			System.out.println("connection established"); // prints connection established if database created 
+			DBCollection coll = db.getCollection("student"); 
+			
+			BasicDBObject query = new BasicDBObject();
+
+			DBCursor cursor = coll.find(query);
+
+			while(cursor.hasNext())
+			{
+			   System.out.println(cursor.next());
+			}
+			cursor.close();
+
+		} 
+		catch (Exception e) { 
+			System.out.println("error"); // if the exception occurs prints error 
+		} 
+		
+	} 
+}
+
+OUTPUT
+connection established
+{ "_id" : { "$oid" : "67075854cc6fb282a498f4a4"} , "name" : "Shruti" , "rollno" : 51.0}
+{ "_id" : { "$oid" : "67075854cc6fb282a498f4a5"} , "name" : "Priyanka" , "rollno" : 28.0}
+{ "_id" : { "$oid" : "67075854cc6fb282a498f4a6"} , "name" : "Tanisha" , "rollno" : 39.0}
+{ "_id" : { "$oid" : "67075854cc6fb282a498f4a7"} , "name" : "Shri" , "rollno" : 40.0}
+{ "_id" : { "$oid" : "67075854cc6fb282a498f4a8"} , "name" : "Sanveda" , "rollno" : 50.0}
+
+MONGO OUTPUT
+> use pract12;
+switched to db pract12
+> db.createCollection("student");
+{ "ok" : 1 }
+> db.student.insertMany([{"name":"Shruti","rollno":51},{"name":"Priyanka","rollno":28},{"name":"Tanisha","rollno":39},{"name":"Shri","rollno":40},{"name":"Sanveda","rollno":50}]);
+{
+	"acknowledged" : true,
+	"insertedIds" : [
+		ObjectId("67075854cc6fb282a498f4a4"),
+		ObjectId("67075854cc6fb282a498f4a5"),
+		ObjectId("67075854cc6fb282a498f4a6"),
+		ObjectId("67075854cc6fb282a498f4a7"),
+		ObjectId("67075854cc6fb282a498f4a8")
+	]
+}
+
+> show dbs;
+admin    0.000GB
+config   0.000GB
+local    0.000GB
+pract12  0.000GB
+te1      0.000GB
+test     0.000GB
+> use pract12;
+switched to db pract12
+> show collections;
+student
+> db.student.find();
+{ "_id" : ObjectId("67075854cc6fb282a498f4a4"), "name" : "Shruti", "rollno" : 51}
+{ "_id" : ObjectId("67075854cc6fb282a498f4a5"), "name" : "Priyanka", "rollno" : 28 }
+{ "_id" : ObjectId("67075854cc6fb282a498f4a6"), "name" : "Tanisha", "rollno" : 39 }
+{ "_id" : ObjectId("67075854cc6fb282a498f4a7"), "name" : "Shri", "rollno" : 40 }
+{ "_id" : ObjectId("67075854cc6fb282a498f4a8"), "name" : "Sanveda", "rollno" : 50 }
+> 
+
+

@@ -1,0 +1,140 @@
+sudo mysql;
+[sudo] password for rmdstic: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 10
+Server version: 8.0.36-0ubuntu0.20.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| class              |
+| collage            |
+| college            |
+| customer           |
+| emp                |
+| employeeinfo       |
+| hospital           |
+| information_schema |
+| medical            |
+| myDB               |
+| mysql              |
+| name_db            |
+| orders             |
+| performance_schema |
+| person             |
+| person2            |
+| student            |
+| sys                |
+| tyengg             |
++--------------------+
+19 rows in set (0.00 sec)
+
+mysql> use person2;
+Database changed
+
+mysql> create table person
+    -> (
+    -> LastName varchar(30),
+    -> FirstName varchar,
+    -> Address varchar,
+    -> Age int(3)
+    -> );
+
+mysql> create table person ( LastName varchar(30), FirstName varchar(20), Address(30),Age int(3)); 
+Query OK, 0 rows affected, 1 warning (0.37 sec)
+
+mysql> desc person;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| LastName  | varchar(30) | YES  |     | NULL    |       |
+| FirstName | varchar(20) | YES  |     | NULL    |       |
+| Address   | varchar(30) | YES  |     | NULL    |       |
+| Age       | int         | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> Alter table person RENAME TO persons;
+Query OK, 0 rows affected (0.26 sec)
+
+mysql> desc persons;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| LastName  | varchar(30) | YES  |     | NULL    |       |
+| FirstName | varchar(20) | YES  |     | NULL    |       |
+| Address   | varchar(30) | YES  |     | NULL    |       |
+| Age       | int         | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into persons values('patil','vishwa','absdf',20);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into persons values('patil','aditi','afghhhf',20);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into persons values('chaudhari','titiksha','afghhhf',20);
+Query OK, 1 row affected (0.09 sec)
+
+mysql> select* from persons;
++-----------+-----------+---------+------+
+| LastName  | FirstName | Address | Age  |
++-----------+-----------+---------+------+
+| patil     | vishwa    | absdf   |   20 |
+| patil     | aditi     | afghhhf |   20 |
+| chaudhari | titiksha  | afghhhf |   20 |
++-----------+-----------+---------+------+
+3 rows in set (0.00 sec)
+
+mysql> create view DetailsView AS select FirstName,Age FROM persons;
+Query OK, 0 rows affected (0.11 sec)
+
+mysql> select* from DetailsView;
++-----------+------+
+| FirstName | Age  |
++-----------+------+
+| vishwa    |   20 |
+| aditi     |   20 |
+| titiksha  |   20 |
++-----------+------+
+3 rows in set (0.00 sec)
+
+mysql> alter table persons add marks int(2);
+Query OK, 0 rows affected, 1 warning (0.34 sec)
+Records: 0  Duplicates: 0  Warnings: 1
+
+mysql> insert into persons values('chaudhari','titiksha','afghhhf',20,85);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into persons values('patil','aditi','afghhhf',20,80);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into persons values('patil','vishwa','absdf',20,90);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> create view personView AS select FirstName,Age FROM persons where marks>8
+3;
+Query OK, 0 rows affected (0.10 sec)
+
+mysql> select* from personView;
++-----------+------+
+| FirstName | Age  |
++-----------+------+
+| titiksha  |   20 |
+| vishwa    |   20 |
++-----------+------+
+2 rows in set (0.00 sec)
+
+mysql> 
+
+)

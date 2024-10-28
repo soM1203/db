@@ -1,0 +1,131 @@
+sudo mysql
+[sudo] password for rmdstic: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 11
+Server version: 8.0.36-0ubuntu0.20.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| class              |
+| collage            |
+| college            |
+| customer           |
+| emp                |
+| employeeinfo       |
+| hospital           |
+| information_schema |
+| medical            |
+| myDB               |
+| mysql              |
+| name_db            |
+| orders             |
+| performance_schema |
+| person             |
+| person2            |
+| student            |
+| sys                |
+| tyengg             |
++--------------------+
+19 rows in set (0.00 sec)
+
+mysql> use orders;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> show tables;
++------------------+
+| Tables_in_orders |
++------------------+
+| customers        |
+| orders           |
++------------------+
+2 rows in set (0.00 sec)
+
+mysql> create view v1 AS select order_id from orders;
+Query OK, 0 rows affected (0.10 sec)
+
+mysql> select* from v1;
++----------+
+| order_id |
++----------+
+|    11201 |
+|    11203 |
+|    11205 |
+|    11209 |
+|    11212 |
++----------+
+5 rows in set (0.02 sec)
+
+mysql> create view v2 AS select order_id from orders where order_id>11205;;
+Query OK, 0 rows affected (0.10 sec)
+
+mysql> select* from v2;
++----------+
+| order_id |
++----------+
+|    11209 |
+|    11212 |
++----------+
+2 rows in set (0.01 sec)
+
+mysql> select order_id from orders where customer_id IN (select customer_id from customers);
++----------+
+| order_id |
++----------+
+|    11209 |
+|    11212 |
++----------+
+2 rows in set (0.00 sec)
+
+
+mysql> select* from customers;
++-------------+---------------+
+| customer_id | customer_name |
++-------------+---------------+
+|       56112 | vishwa        |
+|       56116 | shreya        |
+|       56119 | aditi         |
++-------------+---------------+
+3 rows in set (0.00 sec)
+
+mysql> select* from orders;
++----------+------------+-------------+
+| order_id | order_date | customer_id |
++----------+------------+-------------+
+|    11201 | 2024-06-20 |        NULL |
+|    11203 | 2024-06-25 |        NULL |
+|    11205 | 2024-06-30 |        NULL |
+|    11209 | 2024-06-20 |       56112 |
+|    11212 | 2024-06-25 |       56116 |
++----------+------------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> select order_id from orders where customer_id= (select customer_id from customers WHERE customer_name='vishwa');
++----------+
+| order_id |
++----------+
+|    11209 |
++----------+
+1 row in set (0.00 sec
+
+
+mysql> select order_date from orders where customer_id In (select customer_id from customers);
++------------+
+| order_date |
++------------+
+| 2024-06-20 |
+| 2024-06-25 |
++------------+
+
+

@@ -1,0 +1,301 @@
+base) rmdstic@rmdstic-OptiPlex-3010:~$ sudo mysql
+[sudo] password for rmdstic: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 13
+Server version: 8.0.36-0ubuntu0.20.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| class              |
+| collage            |
+| college            |
+| hospital           |
+| information_schema |
+| medical            |
+| mysql              |
+| orders             |
+| performance_schema |
+| person             |
+| student            |
+| sys                |
+| tyengg             |
++--------------------+
+13 rows in set (0.00 sec)
+
+mysql> use orders;
+Database changed
+mysql> create table orders
+    -> (
+    -> order_id int(2) Not Null,
+    -> order_date date,
+    -> PRIMARY KEY(order_id)
+    -> );
+Query OK, 0 rows affected, 1 warning (0.33 sec)
+
+mysql> desc orders;
++------------+------+------+-----+---------+-------+
+| Field      | Type | Null | Key | Default | Extra |
++------------+------+------+-----+---------+-------+
+| order_id   | int  | NO   | PRI | NULL    |       |
+| order_date | date | YES  |     | NULL    |       |
++------------+------+------+-----+---------+-------+
+2 rows in set (0.01 sec)
+
+mysql> insert into orders(order_id,order_date)values(11201,'2024-06-20');
+Query OK, 1 row affected (0.08 sec)
+
+mysql> insert into orders(order_id,order_date)values(11203,'2024-06-25');
+Query OK, 1 row affected (0.08 sec)
+
+mysql> insert into orders(order_id,order_date)values(11205,'2024-06-30');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> select* from orders;
++----------+------------+
+| order_id | order_date |
++----------+------------+
+|    11201 | 2024-06-20 |
+|    11203 | 2024-06-25 |
+|    11205 | 2024-06-30 |
++----------+------------+
+3 rows in set (0.00 sec)
+
+mysql> create database customer;
+Query OK, 1 row affected (0.10 sec)
+
+mysql> create table customers
+    -> (
+    -> customer_id int(2) Not Null,
+    -> customer_name varchar(30),
+    -> PRIMARY KEY(customer_id)
+    -> );
+Query OK, 0 rows affected, 1 warning (0.36 sec)
+
+mysql> desc customers;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| customer_id   | int         | NO   | PRI | NULL    |       |
+| customer_name | varchar(30) | YES  |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+2 rows in set (0.01 sec)
+
+mysql> insert into customers(customer_id,customer_name) values(56112,'vishwa');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into customers(customer_id,customer_name) values(56116,'shreya');
+Query OK, 1 row affected (0.09 sec)
+
+mysql> insert into customers(customer_id,customer_name) values(56119,'aditi');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> select* from customers;
++-------------+---------------+
+| customer_id | customer_name |
++-------------+---------------+
+|       56112 | vishwa        |
+|       56116 | shreya        |
+|       56119 | aditi         |
++-------------+---------------+
+3 rows in set (0.00 sec)
+
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| class              |
+| collage            |
+| college            |
+| customer           |
+| hospital           |
+| information_schema |
+| medical            |
+| mysql              |
+| orders             |
+| performance_schema |
+| person             |
+| student            |
+| sys                |
+| tyengg             |
++--------------------+
+14 rows in set (0.00 sec)
+
+mysql> ALTER TABLE orders ADD customer_id int(2);
+Query OK, 0 rows affected, 1 warning (0.32 sec)
+Records: 0  Duplicates: 0  Warnings: 1
+
+mysql> select* from orders;
++----------+------------+-------------+
+| order_id | order_date | customer_id |
++----------+------------+-------------+
+|    11201 | 2024-06-20 |           0 |
+|    11203 | 2024-06-25 |           0 |
+|    11205 | 2024-06-30 |           0 |
++----------+------------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> show tables;
++------------------+
+| Tables_in_orders |
++------------------+
+| customers        |
+| orders           |
++------------------+
+2 rows in set (0.00 sec)
+
+mysql> describe orders;
++-------------+------+------+-----+---------+-------+
+| Field       | Type | Null | Key | Default | Extra |
++-------------+------+------+-----+---------+-------+
+| order_id    | int  | NO   | PRI | NULL    |       |
+| order_date  | date | YES  |     | NULL    |       |
+| customer_id | int  | NO   |     | NULL    |       |
++-------------+------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> describe customers;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| customer_id   | int         | NO   | PRI | NULL    |       |
+| customer_name | varchar(30) | YES  |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+mysql> create table orders;
+ERROR 4028 (HY000): A table must have at least one visible column.
+mysql> create table orders
+    ->     (
+    ->     order_id int(2) Not Null,
+    ->     order_date date,
+    ->     customer_id int(2), 
+    ->     PRIMARY KEY(order_id)
+    ->     );
+Query OK, 0 rows affected, 2 warnings (0.50 sec)
+
+mysql> desc orders;
++-------------+------+------+-----+---------+-------+
+| Field       | Type | Null | Key | Default | Extra |
++-------------+------+------+-----+---------+-------+
+| order_id    | int  | NO   | PRI | NULL    |       |
+| order_date  | date | YES  |     | NULL    |       |
+| customer_id | int  | YES  |     | NULL    |       |
++-------------+------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql>  insert into orders(order_id,order_date)values(11201,'2024-06-20');
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into orders(order_id,order_date)values(11203,'2024-06-25');
+Query OK, 1 row affected (0.08 sec)
+
+mysql> insert into orders(order_id,order_date)values(11205,'2024-06-30');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> select* from orders;
++----------+------------+-------------+
+| order_id | order_date | customer_id |
++----------+------------+-------------+
+|    11201 | 2024-06-20 |        NULL |
+|    11203 | 2024-06-25 |        NULL |
+|    11205 | 2024-06-30 |        NULL |
++----------+------------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> Alter table orders add foreign key(customer_id) references customers(customer_id);
+Query OK, 3 rows affected (1.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select orders.order_id,customers.customer_name from orders INNER JOIN customers ON orders.customer_id =customers.customer_id;
+Empty set (0.00 sec)
+
+mysql> select* from customers;
++-------------+---------------+
+| customer_id | customer_name |
++-------------+---------------+
+|       56112 | vishwa        |
+|       56116 | shreya        |
+|       56119 | aditi         |
++-------------+---------------+
+3 rows in set (0.00 sec)
+
+mysql>  insert into orders(order_id,order_date,customer_id)values(11209,'2024-06-20',56112);
+Query OK, 1 row affected (0.07 sec)
+
+//INNER JOIN
+mysql> select orders.order_id,customers.customer_name from orders INNER JOIN customers ON orders.customer_id =customers.customer_id;
++----------+---------------+
+| order_id | customer_name |
++----------+---------------+
+|    11209 | vishwa        |
++----------+---------------+
+1 row in set (0.00 sec)
+
+mysql>  insert into orders(order_id,order_date,customer_id)values(11212,'2024-06-25',56116);
+Query OK, 1 row affected (0.08 sec)
+
+mysql> select* from orders;
++----------+------------+-------------+
+| order_id | order_date | customer_id |
++----------+------------+-------------+
+|    11201 | 2024-06-20 |        NULL |
+|    11203 | 2024-06-25 |        NULL |
+|    11205 | 2024-06-30 |        NULL |
+|    11209 | 2024-06-20 |       56112 |
+|    11212 | 2024-06-25 |       56116 |
++----------+------------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> select customers.customer_name, orders.order_id from customers LEFT JOIN orders ON customers.customer_id = orders.customer_id;
++---------------+----------+
+| customer_name | order_id |
++---------------+----------+
+| vishwa        |    11209 |
+| shreya        |    11212 |
+| aditi         |     NULL |
++---------------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select customers.customer_name, orders.order_id from customers RIGHT JOIN orders ON customers.customer_id = orders.customer_id;
++---------------+----------+
+| customer_name | order_id |
++---------------+----------+
+| NULL          |    11201 |
+| NULL          |    11203 |
+| NULL          |    11205 |
+| vishwa        |    11209 |
+| shreya        |    11212 |
++---------------+----------+
+5 rows in set (0.00 sec)
+
+mysql> select customers.customer_name, orders.order_id from customers , orders;
++---------------+----------+
+| customer_name | order_id |
++---------------+----------+
+| aditi         |    11201 |
+| shreya        |    11201 |
+| vishwa        |    11201 |
+| aditi         |    11203 |
+| shreya        |    11203 |
+| vishwa        |    11203 |
+| aditi         |    11205 |
+| shreya        |    11205 |
+| vishwa        |    11205 |
+| aditi         |    11209 |
+| shreya        |    11209 |
+| vishwa        |    11209 |
+| aditi         |    11212 |
+| shreya        |    11212 |
+| vishwa        |    11212 |
++---------------+----------+
+15 rows in set (0.00 sec)
